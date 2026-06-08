@@ -1,0 +1,45 @@
+<h1>MY CART</h1>
+
+    <nav>
+        <a href="{% url 'product_list' %}">Go back to Products || </a>
+        <a href="{% url 'wishlist' %}">wishlist</a>
+    </nav>
+
+{% for item in items %}
+    <a href="{% url 'remove_from_cart' item.id %}">Remove</a>
+
+    <img src="{{ item.product.image.url }}" width="150">
+
+    <p>{{ item.product.name }}</p>
+    <a href="{% url 'decrease_quantity' item.id %}">[-]</a>
+
+    <span>Qty: {{ item.quantity }}</span>
+
+    <a href="{% url 'increase_quantity' item.id %}">[+]</a>
+    <p>₹ {{ item.product.price }}</p>
+    <p>
+       ₹ {{ item.subtotal }}
+    </p>
+
+{% empty %}
+    <p>Your cart is empty.</p>
+
+{% endfor %}
+
+<h2>Total: ₹ {{ total }}</h2>
+
+<!-- <form method="POST" action="{% url 'place_order' %}">
+    {% csrf_token %}
+    <button type="submit">
+        Place Order
+    </button>
+</form> -->
+
+<!-- 
+<form action="{% url 'payment_page' %}" method="get">
+    <button type="submit">Place Order</button>
+</form> -->
+
+<form action="{% url 'address_page' %}" method="get">
+    <button type="submit">Place Order</button>
+</form>

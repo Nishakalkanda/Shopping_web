@@ -1,0 +1,19 @@
+<h1> My Orders </h1>
+
+<nav>
+        <a href="{% url 'product_list' %}">Products || </a>
+        <a href="{% url 'cart' %}">Cart || </a>
+        <a href="{% url 'wishlist' %}">wishlist</a>
+    </nav>
+{% for order in orders %}
+
+    <p> Order #{{ order.id }}</p>
+    <p>Total: rs{{ order.total_amount }}</p>
+    <p>Status: {{ order.status }}</p>
+
+{% empty %}
+    <p>No Orders</p>    
+
+{% endfor %}
+
+

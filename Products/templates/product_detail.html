@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+    <nav>
+        <a href="{% url 'home' %}">Home || </a>
+        <a href="{% url 'cart' %}">Cart</a>
+    </nav>
+<head>
+    <title>{{ product.name }}</title>
+</head>
+<body>
+
+<h1>{{ product.name }}</h1>
+
+<img src="{{ product.image.url }}" width="300">
+
+<p>{{ product.description }}</p>
+
+<p>₹ {{ product.price }}</p>
+
+<a href="{% url 'add_to_wishlist' product.id %}">
+    ❤️ Add to Wishlist
+</a>
+
+<p>Stock: {{ product.stock }}</p>
+<a href="{% url 'add_to_cart' product.id %}">
+    Add to Cart  |||||
+</a>
+
+<a href="/products/">Back to Products</a>
+
+</body>
+</html>

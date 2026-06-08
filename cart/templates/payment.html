@@ -1,0 +1,64 @@
+<!-- <h1>Payment Gateway</h1>
+
+<nav>
+        <a href="{% url 'product_list' %}">Products || </a>
+        <a href="{% url 'cart' %}">Cart</a>
+    </nav>
+
+<p>Total Amount: ₹{{ total }}</p>
+
+<form method="post" action="{% url 'payment_success' %}">
+    {% csrf_token %}
+    <button type="submit">Pay Now</button>
+</form> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+</head>
+<body>
+
+    <nav>
+        <a href="{% url 'product_list' %}">Products || </a>
+        <a href="{% url 'cart' %}">Cart || </a>
+        <a href="{% url 'wishlist' %}">wishlist</a>
+    </nav>
+
+<h2>Total Amount: ₹{{ total }}</h2>
+
+<button id="rzp-button">Pay Now</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ payment.amount }}",
+    "currency": "INR",
+    "name": "My Store",
+    "description": "Order Payment",
+    "order_id": "{{ payment.id }}",
+
+    "handler": function (response) {
+
+        window.location.href =
+        "/payment/success/?payment_id=" +
+        response.razorpay_payment_id;
+
+    }
+};
+
+var rzp1 = new Razorpay(options);
+
+document.getElementById('rzp-button').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+</script>
+
+</body>
+</html>

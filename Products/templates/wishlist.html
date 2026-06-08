@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Wishlist</title>
+</head>
+<body>
+
+    <h1>❤️ My Wishlist</h1>
+
+    <nav>
+        <a href="{% url 'product_list' %}">Products</a> |
+        <a href="{% url 'cart' %}">Cart</a> |
+    </nav>
+
+    <hr>
+
+    {% for item in wishlist_items %}
+
+        <div>
+
+            {% if item.product.image %}
+                <img src="{{ item.product.image.url }}"
+                     width="150">
+            {% endif %}
+
+            <h3>{{ item.product.name }}</h3>
+
+            <p>{{ item.product.description }}</p>
+
+            <p>
+                Price: ₹{{ item.product.price }}
+            </p>
+
+            <a href="{% url 'add_to_cart' item.product.id %}">
+                Add to Cart
+            </a>
+
+        </div>
+
+        <hr>
+
+    {% empty %}
+
+        <p>Your wishlist is empty.</p>
+
+    {% endfor %}
+
+</body>
+</html>
