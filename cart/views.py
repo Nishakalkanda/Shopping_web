@@ -4,7 +4,13 @@ import razorpay
 from Products.models import Product
 from cart.models import Address, Cart, CartItem, Order, OrderItem
 from ecommerce import settings
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import OrderSerializer
+from .serializers import CartItemSerializer
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import (api_view,permission_classes)
 # Create your views here.
 
 
@@ -200,3 +206,25 @@ def order_detail(request, order_id):
         'order_detail.html',
         {'order': order}
     )
+    
+    
+@api_view(['GET'])
+def cart_api(request):
+
+    cart = Cart.objects.get(user=request.user)
+    items = CartItem.objects.filter(cart=cart)
+    serializer = CartItemSerializer(items,many=True)
+    
+    return Response(serializer.data)    
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def orders_api(request):
+
+    orders = Order.objects.filter(user=request.user)
+    serializer = OrderSerializer(orders,many=True)
+
+    return Response(serializer.data)
+

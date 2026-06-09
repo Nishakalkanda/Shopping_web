@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Products',
     'rest_framework',
     'cart',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 RAZORPAY_KEY_ID = "rzp_test_Sz1zSRCkGPZiYH"
 RAZORPAY_KEY_SECRET = "uSpq75jhwnpDdYpOVAem4dCG"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}

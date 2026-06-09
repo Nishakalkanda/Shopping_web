@@ -77,7 +77,18 @@ def product_api(request):
     
     return Response(serializer.data)
         
-        
+
+@api_view(['GET'])
+def product_detail_api(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id
+    )
+
+    serializer = ProductSerializer(product)
+
+    return Response(serializer.data)        
 
     
 @login_required
