@@ -23,15 +23,23 @@ def cart_view(request):
     
     
 def add_to_cart(request, product_id):
-    product=get_object_or_404(Product, id=product_id)
+    product = get_object_or_404(Product, id=product_id)
+
+    if product.stock <= 0:
+        return redirect('product_list')
+
     cart, created = Cart.objects.get_or_create(user=request.user)
-    item, created =CartItem.objects.get_or_create(cart=cart, product = product)
-    
+
+    item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
     if not created:
-        item.quantity += 1
-        item.save()
-        
-    return redirect('cart')   
+
+        if item.quantity < product.stock:
+            item.quantity += 1
+            item.save()
+
+    return redirect('cart')
+
 
 
 def remove_from_cart(request, item_id):
@@ -46,10 +54,13 @@ def remove_from_cart(request, item_id):
 
 
 def increase_quantity(request, item_id):
+
     item = get_object_or_404(CartItem, id=item_id)
 
-    item.quantity += 1
-    item.save()
+    if item.quantity < item.product.stock:
+
+        item.quantity += 1
+        item.save()
 
     return redirect('cart')
 
@@ -129,25 +140,30 @@ def payment_page(request):
 
 @login_required
 def payment_success(request):
+
     cart = Cart.objects.get(user=request.user)
 
     cart_items = CartItem.objects.filter(cart=cart)
-    
+
     total = sum(
         item.product.price * item.quantity
         for item in cart_items
     )
 
-    Order.objects.create(
-        user=request.user,
-        total_amount=total,
-        status='Pending'
-    )
+    order = Order.objects.create(user=request.user, total_amount=total, status='Paid')
+
+    for item in cart_items:
+
+        product = item.product
+
+        product.stock -= item.quantity
+        product.save()
+
+        OrderItem.objects.create(order=order, product=product, quantity=item.quantity, price=product.price)
 
     cart_items.delete()
 
     return redirect('orders')
-
 
 
      
@@ -169,3 +185,18 @@ def address_page(request):
         return redirect('payment_page')
 
     return render(request, 'address.html')     
+
+
+
+@login_required
+def order_detail(request, order_id):
+
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    print("ORDER ITEMS:", order.orderitem_set.all())
+
+
+    return render(
+        request,
+        'order_detail.html',
+        {'order': order}
+    )

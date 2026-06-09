@@ -1,19 +1,29 @@
-<h1> My Orders </h1>
+<h1>My Orders</h1>
 
 <nav>
-        <a href="{% url 'product_list' %}">Products || </a>
-        <a href="{% url 'cart' %}">Cart || </a>
-        <a href="{% url 'wishlist' %}">wishlist</a>
-    </nav>
+    <a href="{% url 'product_list' %}">Products || </a>
+    <a href="{% url 'cart' %}">Cart || </a>
+    <a href="{% url 'wishlist' %}">Wishlist</a>
+</nav>
+
+<hr>
+
 {% for order in orders %}
 
-    <p> Order #{{ order.id }}</p>
-    <p>Total: rs{{ order.total_amount }}</p>
+    <h3>Order #{{ order.id }}</h3>
+
+    <p>Total: ₹{{ order.total_amount }}</p>
+
     <p>Status: {{ order.status }}</p>
 
+    <a href="{% url 'order_detail' order.id %}">
+        Track Order
+    </a>
+
+    <hr>
+
 {% empty %}
-    <p>No Orders</p>    
+
+    <p>No Orders</p>
 
 {% endfor %}
-
-

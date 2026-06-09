@@ -30,6 +30,11 @@
 
 <button id="rzp-button">Pay Now</button>
 
+<button onclick="window.location.href='{% url 'payment_success' %}'">
+    Simulate Payment Success
+</button>
+
+
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>

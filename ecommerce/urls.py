@@ -16,14 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from Products.views import add_to_wishlist, product_detail, product_list, wishlist_view
+from Products.views import add_review, add_to_wishlist, product_api, product_detail, product_list, wishlist_view
 from authentication.views import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
 from cart import views
-from cart.views import add_to_cart, cart_view, decrease_quantity, delete_all_orders, increase_quantity, orders_view, place_order, remove_from_cart
+from cart.views import add_to_cart, cart_view, decrease_quantity, delete_all_orders, increase_quantity, order_detail, orders_view, place_order, remove_from_cart
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,12 +40,15 @@ urlpatterns = [
     path('decrease/<int:item_id>/', decrease_quantity, name='decrease_quantity'),
     path('place-order/', place_order, name='place_order'),
     path('orders/', orders_view, name='orders'),
+    path('order/<int:order_id>/', order_detail, name='order_detail'),
     path('delete-all-orders/', delete_all_orders, name='delete_all_orders'),
     path('payment/', views.payment_page, name = 'payment_page'),
     path('payment/success/', views.payment_success, name='payment_success'),
     path('wishlist/', wishlist_view, name='wishlist'),
     path('wishlist/add/<int:product_id>/', add_to_wishlist, name='add_to_wishlist'),
     path('address/', views.address_page, name='address_page'),
+    path('api/products/', product_api, name = 'product_api'),
+    path('review/<int:product_id>/', add_review, name = 'add_review'),
     
 ]
 

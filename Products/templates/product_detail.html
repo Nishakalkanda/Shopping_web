@@ -3,7 +3,8 @@
 
     <nav>
         <a href="{% url 'home' %}">Home || </a>
-        <a href="{% url 'cart' %}">Cart</a>
+        <a href="{% url 'cart' %}">Cart || </a>
+        <a href="{% url 'orders' %}">My orders</a>
     </nav>
 <head>
     <title>{{ product.name }}</title>
@@ -28,6 +29,77 @@
 </a>
 
 <a href="/products/">Back to Products</a>
+
+<hr>
+
+<h2>Add Review</h2>
+
+<form method="POST"
+      action="{% url 'add_review' product.id %}">
+
+    {% csrf_token %}
+
+    <label>Rating</label>
+
+    <select name="rating">
+        <option value="5">⭐⭐⭐⭐⭐</option>
+        <option value="4">⭐⭐⭐⭐</option>
+        <option value="3">⭐⭐⭐</option>
+        <option value="2">⭐⭐</option>
+        <option value="1">⭐</option>
+    </select>
+
+    <br><br>
+
+    <textarea
+        name="comment"
+        rows="4"
+        cols="50"
+        placeholder="Write your review">
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Submit Review
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Customer Reviews</h2>
+
+{% for review in reviews %}
+
+    <div>
+
+        <strong>
+            {{ review.user.username }}
+        </strong>
+
+        <p>
+            Rating:
+            {{ review.rating }}/5
+        </p>
+
+        <p>
+            {{ review.comment }}
+        </p>
+
+        <small>
+            {{ review.created_at }}
+        </small>
+
+    </div>
+
+    <hr>
+
+{% empty %}
+
+    <p>No reviews yet.</p>
+
+{% endfor %}
 
 </body>
 </html>

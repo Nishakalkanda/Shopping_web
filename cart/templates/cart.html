@@ -2,7 +2,8 @@
 
     <nav>
         <a href="{% url 'product_list' %}">Go back to Products || </a>
-        <a href="{% url 'wishlist' %}">wishlist</a>
+        <a href="{% url 'wishlist' %}">wishlist || </a>
+        <a href="{% url 'orders' %}">My Order</a>
     </nav>
 
 {% for item in items %}
