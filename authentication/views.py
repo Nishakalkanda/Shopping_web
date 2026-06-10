@@ -11,7 +11,7 @@ def home(request):
     return render(request, 'home.html')
 
 def root_redirect(request):
-    return redirect('home')
+    return redirect('login_page')
 
 def login_page(request):
     if request.method == "POST":
