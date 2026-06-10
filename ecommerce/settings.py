@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'secret'
+SECRET_KEY = 'django-insecure-@98rmagnajzipo6rhmk*wkw0nt3@biz8=p%2isho8i(koj!_!v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -137,8 +137,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-RAZORPAY_KEY_ID = "key"
-RAZORPAY_KEY_SECRET = "pasword"
+RAZORPAY_KEY_ID = "rzp_test_Sz1zSRCkGPZiYH"
+RAZORPAY_KEY_SECRET = "uSpq75jhwnpDdYpOVAem4dCG"
 
 
 REST_FRAMEWORK = {
