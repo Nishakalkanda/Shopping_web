@@ -25,14 +25,21 @@
         }
     </style>
 </head>
+<div class="container">
+        <a class="navbar-brand" href="#">MeShop</a>
+
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="{% url 'product_list' %}">Products</a>
+            <a class="nav-link" href="{% url 'cart' %}">Cart</a>
+            <a class="nav-link" href="{% url 'wishlist' %}">Wishlist</a>
+            <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+        </div>
+    </div>
 <body>
 
-    <nav>
-        <a href="{% url 'product_list' %}">Products || </a>
-        <a href="{% url 'cart' %}">Cart || </a>
-        <a href="{% url 'wishlist' %}">wishlist || </a>
-        <a href="{% url 'orders' %}"> My Orders</a>
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
+</nav>
     <div class="container">
         <!-- Page heading -->
         <h1>Welcome to Meshop!! </h1>
